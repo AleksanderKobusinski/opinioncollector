@@ -109,7 +109,7 @@ function ProductScreen() {
                                             </ListGroup.Item>
                                         ))}
                                     </ListGroup>
-
+                                    {userInfo && !userInfo.isAdmin && (
                                     <Card.Body>
                                         <Card.Title>Write a review</Card.Title>
 
@@ -161,6 +161,7 @@ function ProductScreen() {
                                                     <Message variant='info'>Please <Link to='/login'>login</Link> to write a review</Message>
                                                 )}
                                     </Card.Body>
+                                    )}
                                 </Card>
                             </Col>
                         </Row>

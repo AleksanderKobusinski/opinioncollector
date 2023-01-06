@@ -7,6 +7,7 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
 import { listProductDetails, updateProduct } from '../actions/productActions'
+import { listCategories } from '../actions/categoryActions';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 
 
@@ -15,11 +16,9 @@ function ProductEditScreen() {
     const productId = useParams();
 
     const [name, setName] = useState('')
-    const [price, setPrice] = useState(0)
     const [image, setImage] = useState('')
     const [brand, setBrand] = useState('')
     const [category, setCategory] = useState('')
-    const [countInStock, setCountInStock] = useState(0)
     const [description, setDescription] = useState('')
     const [uploading, setUploading] = useState(false)
 
@@ -32,6 +31,9 @@ function ProductEditScreen() {
     const productUpdate = useSelector(state => state.productUpdate)
     const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = productUpdate
 
+    const categoryList = useSelector(state => state.categoryList)
+    const { error: errorCategory, loading: loadingCategory, categories } = categoryList
+
 
     useEffect(() => {
 
@@ -41,13 +43,12 @@ function ProductEditScreen() {
         } else {
             if (!product.name || product._id !== Number(productId.id)) {
                 dispatch(listProductDetails(productId.id))
+                dispatch(listCategories())
             } else {
                 setName(product.name)
-                setPrice(product.price)
                 setImage(product.image)
                 setBrand(product.brand)
                 setCategory(product.category)
-                setCountInStock(product.countInStock)
                 setDescription(product.description)
 
             }
@@ -59,11 +60,9 @@ function ProductEditScreen() {
         dispatch(updateProduct({
             _id: productId.id,
             name,
-            price,
             image,
             brand,
             category,
-            countInStock,
             description
         }))
     }
@@ -122,18 +121,6 @@ function ProductEditScreen() {
                                 </Form.Control>
                             </Form.Group>
 
-                            <Form.Group className="mb-3 rounded" controlId='price'>
-                                <Form.Label>Price</Form.Label>
-                                <Form.Control
-
-                                    type='number'
-                                    placeholder='Enter price'
-                                    value={price}
-                                    onChange={(e) => setPrice(e.target.value)}
-                                >
-                                </Form.Control>
-                            </Form.Group>
-
 
                             <Form.Group className="mb-3 rounded" controlId='image'>
                                 <Form.Label>Image</Form.Label>
@@ -172,27 +159,17 @@ function ProductEditScreen() {
                                 </Form.Control>
                             </Form.Group>
 
-                            <Form.Group className="mb-3 rounded" controlId='countinstock'>
-                                <Form.Label>Stock</Form.Label>
-                                <Form.Control
-
-                                    type='number'
-                                    placeholder='Enter stock'
-                                    value={countInStock}
-                                    onChange={(e) => setCountInStock(e.target.value)}
-                                >
-                                </Form.Control>
-                            </Form.Group>
-
                             <Form.Group className="mb-3 rounded" controlId='category'>
                                 <Form.Label>Category</Form.Label>
                                 <Form.Control
 
-                                    type='text'
-                                    placeholder='Enter category'
-                                    value={category}
+                                    as="select"
+                                    // value={category.name}
                                     onChange={(e) => setCategory(e.target.value)}
                                 >
+                                    {categories?.map(categoryEx => (          
+                                        <option key={categoryEx._id} value={categoryEx._id}>{categoryEx.name}</option>
+                                    ))}
                                 </Form.Control>
                             </Form.Group>
 

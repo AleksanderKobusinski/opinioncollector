@@ -41,6 +41,11 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = '__all__'
         
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+        
 class ProductSerializer(serializers.ModelSerializer):
     reviews = serializers.SerializerMethodField(read_only=True)
     

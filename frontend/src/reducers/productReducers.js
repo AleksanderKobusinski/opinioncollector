@@ -27,10 +27,10 @@ import {
     PRODUCT_CREATE_REVIEW_RESET,
 } from '../constants/productConstants'
 
-export const productListReducer = (state = {products:[]}, action) => {
+export const productListReducer = (state = {products: []}, action) => {
     switch (action.type) {
         case PRODUCT_LIST_REQUEST:
-            return { loading: true, products:[]}
+            return { loading: true, products: []}
 
         case PRODUCT_LIST_SUCCESS:
             return {

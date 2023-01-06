@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from base.models import Product, Review
+from base.models import Product, Review, Category
 from base.serializers import ProductSerializer
 
 from rest_framework import status
@@ -14,11 +14,19 @@ from rest_framework import status
 @api_view(['GET'])
 def getProducts(request):
     query = request.query_params.get('keyword')
+    queryF = request.query_params.get('filter')
+    print(queryF)
+    
     if query == None:
         query = ''
 
-    products = Product.objects.filter(
-        name__icontains=query).order_by('-createdAt')
+    if queryF == 'None' or queryF == None:
+        products = Product.objects.filter(
+            name__icontains=query).order_by('-createdAt')
+    else:
+        products = Product.objects.filter(
+            name__icontains=query).filter(
+            category_id=queryF).order_by('-createdAt')
 
     page = request.query_params.get('page')
     paginator = Paginator(products, 5)
@@ -34,7 +42,7 @@ def getProducts(request):
         page = 1
 
     page = int(page)
-    print('Page:', page)
+    # print('Page:', page)
     serializer = ProductSerializer(products, many=True)
     return Response({'products': serializer.data, 'page': page, 'pages': paginator.num_pages})
 
@@ -61,10 +69,8 @@ def createProduct(request):
     product = Product.objects.create(
         user=user,
         name='Sample Name',
-        price=0,
         brand='Sample Brand',
-        countInStock=0,
-        category='Sample Category',
+        # category=Product.objects.create,
         description=''
     )
 
@@ -77,12 +83,9 @@ def createProduct(request):
 def updateProduct(request, pk):
     data = request.data
     product = Product.objects.get(_id=pk)
-
     product.name = data['name']
-    product.price = data['price']
     product.brand = data['brand']
-    product.countInStock = data['countInStock']
-    product.category = data['category']
+    # product.category = Category.objects.get(_id=data['category'])
     product.description = data['description']
 
     product.save()

@@ -5,51 +5,49 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import Paginate from '../components/Paginate'
-import { listProducts, deleteProduct, createProduct } from '../actions/productActions'
-import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
+import { listCategories, deleteCategory, createCategory } from '../actions/categoryActions'
+import { CATEGORY_CREATE_RESET } from '../constants/categoryConstants'
 
-function ProductListScreen() {
+function CategoryListScreen() {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const productList = useSelector(state => state.productList)
-    const { loading, error, products, pages, page } = productList
-
-    const productDelete = useSelector(state => state.productDelete)
-    const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete
-
-    const productCreate = useSelector(state => state.productCreate)
-    const { loading: loadingCreate, error: errorCreate, success: successCreate, product: createdProduct } = productCreate
-
+    const categoryList = useSelector(state => state.categoryList)
+    const { loading, error, categories } = categoryList
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    let keyword = navigate.search
+    const categoryDelete = useSelector(state => state.categoryDelete)
+    const { loading: loadingDelete, error: errorDelete, success: successDelete } = categoryDelete
+
+    const categoryCreate = useSelector(state => state.categoryCreate)
+    const { loading: loadingCreate, error: errorCreate, success: successCreate, category: createdCategory } = categoryCreate
+
+
     useEffect(() => {
-        dispatch({ type: PRODUCT_CREATE_RESET })
+        dispatch({ type: CATEGORY_CREATE_RESET })
 
         if (!userInfo.isAdmin) {
             navigate('/login')
         }
 
         if (successCreate) {
-            navigate(`/admin/product/${createdProduct._id}/edit`)
+            navigate(`/admin/category/${createdCategory._id}/edit`)
         } else {
-            dispatch(listProducts(keyword))
+            dispatch(listCategories())
         }
 
-    }, [ dispatch, navigate, userInfo, successDelete, successCreate, createdProduct, keyword ])
+    }, [ dispatch, navigate, userInfo, successDelete, successCreate, createdCategory ])
 
-    const createProductHandler = () => {
-        dispatch(createProduct())
+    const createCategoryHandler = () => {
+        dispatch(createCategory())
     }
 
     const deleteHandler = (id) => {
-        if (window.confirm('Are you sure you want to delete this product?')) {
-            dispatch(deleteProduct(id))
+        if(window.confirm('Are you sure you want to delete this category?')){
+            dispatch(deleteCategory(id))
         }
     }
 
@@ -57,12 +55,12 @@ function ProductListScreen() {
         <div>
             <Row className='align-items-center'>
                 <Col>
-                    <h1>Products</h1>
+                    <h1>Categories</h1>
                 </Col>
 
-                <Col>
-                    <Button className='my-3 float-end' onClick={createProductHandler}>
-                        <i className='fas fa-plus'></i> Create Product
+                <Col className='text-right'>
+                    <Button className='my-3 float-end' onClick={createCategoryHandler}>
+                        <i className='fas fa-plus'></i> Create Category
                     </Button>
                 </Col>
             </Row>
@@ -85,28 +83,23 @@ function ProductListScreen() {
                                     <tr>
                                         <th>ID</th>
                                         <th>NAME</th>
-                                        <th>CATEGORY</th>
-                                        <th>BRAND</th>
                                         <th></th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    {products.map(product => (
-                                        <tr key={product._id}>
-                                            <td>{product._id}</td>
-                                            <td>{product.name}</td>
-                                            <td>{product.category}</td>
-                                            <td>{product.brand}</td>
-
+                                    {categories?.map(category => (
+                                        <tr key={category._id}>
+                                            <td>{category._id}</td>
+                                            <td>{category.name}</td>
                                             <td>
-                                                <LinkContainer to={`/admin/product/${product._id}/edit`}>
+                                                <LinkContainer to={`/admin/category/${category._id}/edit`}>
                                                     <Button variant='light' className='btn-sm'>
                                                         <i className='fas fa-edit'></i>
                                                     </Button>
                                                 </LinkContainer>
 
-                                                <Button variant='danger' className='btn-sm' onClick={() => deleteHandler(product._id)}>
+                                                <Button variant='danger' className='btn-sm' onClick={() => deleteHandler(category._id)}>
                                                     <i className='fas fa-trash'></i>
                                                 </Button>
                                             </td>
@@ -114,11 +107,10 @@ function ProductListScreen() {
                                     ))}
                                 </tbody>
                             </Table>
-                            <Paginate pages={pages} page={page} isAdmin={true} />
                         </div>
                     )}
         </div>
     )
 }
 
-export default ProductListScreen
+export default CategoryListScreen
