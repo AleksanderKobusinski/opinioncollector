@@ -15,7 +15,6 @@ from rest_framework import status
 def getProducts(request):
     query = request.query_params.get('keyword')
     queryF = request.query_params.get('filter')
-    print(queryF)
     
     if query == None:
         query = ''

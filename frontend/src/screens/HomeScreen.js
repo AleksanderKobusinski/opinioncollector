@@ -1,7 +1,7 @@
 import React, {useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Row, Col, Form, Button } from 'react-bootstrap'
+import { Row, Col, Form, Dropdown } from 'react-bootstrap'
 import Product from '../components/Product'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -47,8 +47,8 @@ function HomeScreen() {
           </Col>
 
           <Col className='text-right'>
-            <Form className='d-flex float-end' onSubmit={submitHandler} inline>
-                <Form.Control
+            <Form className='d-flex float-end' inline>
+                {/* <Form.Control
                 style={{ width: '200px'}}
                 as="select"
                 onChange={(e) => setFilter(e.target.value)}
@@ -65,7 +65,38 @@ function HomeScreen() {
                     variant='outline-dark'
                 >
                     <i className="fa-solid fa-filter"></i>
-                </Button>
+                </Button> */}
+                <Dropdown>
+                  <Dropdown.Toggle variant="outline-dark" id="dropdown-basic">
+                  <i className="fa-solid fa-filter"></i>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item eventKey="0" onChange={submitHandler}>
+                      <Form.Check 
+                            name="filter"
+                            type='radio'
+                            value='None'
+                            label='...'
+                            onChange={(e) => setFilter(e.target.value)}
+                            checked={window.location.href.slice(32,33) == "N" || window.location.href.slice(32,33) == '' ? true : false}
+                          />
+                      </Dropdown.Item>  
+                      {categories?.map(category => (  
+                        <Dropdown.Item key={category._id} eventKey={category._id} onChange={submitHandler}> 
+                          <Form.Check 
+                            name="filter"
+                            type='radio'
+                            value={category._id}
+                            id={category._id}
+                            label={category.name}
+                            onChange={(e) => setFilter(e.target.value)}
+                            checked={window.location.href.slice(32,33) == category._id ? true : false}
+                          />
+                        </Dropdown.Item>  
+                      ))}
+                  </Dropdown.Menu>
+                </Dropdown>
             </Form>
           </Col>
       </Row>
