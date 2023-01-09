@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { Row, Col, Image, ListGroup, Button, Card, ListGroupItem, Form } from 'react-bootstrap'
+import { Row, Col, Image, ListGroup, Button, Card, ListGroupItem, Form, Modal } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -12,6 +12,8 @@ function ProductScreen() {
 
     const [rating, setRating] = useState(0)
     const [comment, setComment] = useState('')
+    const [show, setShow] = useState(false);
+    const [message, setMessage] = useState('')
 
     const productId = useParams();
     const dispatch = useDispatch()
@@ -49,10 +51,53 @@ function ProductScreen() {
     }
     ))
 }
+
+const feedbackHandler = (e) => {
+    e.preventDefault()
+}
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
   
     return (
-        <div>
-            <Link to='/' className='btn btn-light my-3'>Go Back</Link>
+        <div><Row className='align-items-center'>
+                <Col>
+                    <Link to='/' className='btn btn-light my-3'>Go Back</Link>
+                </Col>
+
+                <Col>
+                    <Button className='my-3 float-end' variant='warning' onClick={handleShow}>
+                        <i className="fa-solid fa-circle-exclamation"></i>
+                    </Button>
+                </Col>
+            </Row>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Send feedback</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={feedbackHandler}>
+                        <Form.Group className="mb-3 rounded" controlId='description'>
+                            <Form.Label>Feedback message</Form.Label>
+                            <Form.Control
+
+                                as='textarea'
+                                type='text'
+                                placeholder='Enter message'
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                            >
+                            </Form.Control>
+                        </Form.Group>
+                        <Button variant="success" type="submit" onClick={handleClose}>
+                            Send
+                        </Button>
+                    </Form>
+                </Modal.Body>
+
+            </Modal>
+            
             {loading ?
                 <Loader/>
                 : error
@@ -76,7 +121,7 @@ function ProductScreen() {
                                     )}
                                     </ListGroupItem>
                                     <ListGroupItem>
-                                        Description: {product.description}
+                                        {product.description}
                                     </ListGroupItem>
                                 </ListGroup>
                             </Col>

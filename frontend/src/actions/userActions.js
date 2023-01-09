@@ -292,3 +292,14 @@ export const updateUser = (user) => async (dispatch, getState) => {
         })
     }
 }
+
+export const googleLogin = async (accesstoken) => {
+    let res = await axios.post(
+      "/rest-auth/google/",
+      {
+        access_token: accesstoken,
+      }
+    );
+    console.log(res);
+    return await res.status;
+  };

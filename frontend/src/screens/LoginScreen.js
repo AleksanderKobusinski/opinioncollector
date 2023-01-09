@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
-import { login } from '../actions/userActions'
-import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
+import { login, googleLogin } from '../actions/userActions'
+// import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
+import GoogleLogin from 'react-google-login'
 
 
 function LoginScreen() {
@@ -32,6 +33,11 @@ function LoginScreen() {
         e.preventDefault()
         dispatch(login(email, password))
     }
+
+
+    const responseGoogle = (response) => {
+        console.log(response)
+      }
 
     return (
         <FormContainer>
@@ -72,10 +78,12 @@ function LoginScreen() {
                 </Col>
             </Row>
             <Row className='py-3'>
-                <FacebookLoginButton onClick={() => alert("Hello")} />
-            </Row>
-            <Row className='py-3'>
-                <GoogleLoginButton onClick={() => alert("Hello")} />
+                <GoogleLogin
+                    clientId="<Google Client ID>"
+                    buttonText="LOGIN WITH GOOGLE"
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                />
             </Row>
             
         </FormContainer>
