@@ -27,23 +27,8 @@ def getProducts(request):
             name__icontains=query).filter(
             category_id=queryF).order_by('-createdAt')
 
-    page = request.query_params.get('page')
-    paginator = Paginator(products, 5)
-
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        products = paginator.page(1)
-    except EmptyPage:
-        products = paginator.page(paginator.num_pages)
-
-    if page == None:
-        page = 1
-
-    page = int(page)
-    # print('Page:', page)
     serializer = ProductSerializer(products, many=True)
-    return Response({'products': serializer.data, 'page': page, 'pages': paginator.num_pages})
+    return Response({'products': serializer.data})
 
 
 @api_view(['GET'])
@@ -84,7 +69,7 @@ def updateProduct(request, pk):
     product = Product.objects.get(_id=pk)
     product.name = data['name']
     product.brand = data['brand']
-    # product.category = Category.objects.get(_id=data['category'])
+    product.category = Category.objects.get(_id=data['category'])
     product.description = data['description']
 
     product.save()

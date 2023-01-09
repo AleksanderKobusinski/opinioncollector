@@ -25,8 +25,8 @@ import {
     PRODUCT_CREATE_REVIEW_FAIL,
 } from '../constants/productConstants'
 
-export const listProducts = ( keyword = '', filter = '') => async (dispatch) => {
-    try{
+export const listProducts = (keyword = '', filter = '') => async (dispatch) => {
+    try {
         dispatch({ type: PRODUCT_LIST_REQUEST })
 
         const { data } = await axios.get(`/api/products?${keyword}${filter}`)
@@ -36,18 +36,18 @@ export const listProducts = ( keyword = '', filter = '') => async (dispatch) => 
             payload: data
         })
 
-    }catch(error){
+    } catch (error) {
         dispatch({
             type: PRODUCT_LIST_FAIL,
             payload: error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+                ? error.response.data.message
+                : error.message,
         })
     }
 }
 
 export const listProductDetails = (id) => async (dispatch) => {
-    try{
+    try {
         dispatch({ type: PRODUCT_DETAILS_REQUEST })
 
         const { data } = await axios.get(`/api/products/${id}`)
@@ -57,12 +57,12 @@ export const listProductDetails = (id) => async (dispatch) => {
             payload: data
         })
 
-    }catch(error){
+    } catch (error) {
         dispatch({
             type: PRODUCT_DETAILS_FAIL,
             payload: error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+                ? error.response.data.message
+                : error.message,
         })
     }
 }
@@ -78,15 +78,15 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
         } = getState()
 
         const { data } = await axios
-        .create({
-            headers: {
-                'Content-type': 'application/json',
-                Authorization: `Bearer ${userInfo.token}`
-            }
-        })
-        .delete(
-            `/api/products/delete/${id}/`
-        )
+            .create({
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${userInfo.token}`
+                }
+            })
+            .delete(
+                `/api/products/delete/${id}/`
+            )
 
         dispatch({
             type: PRODUCT_DELETE_SUCCESS,

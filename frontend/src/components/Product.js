@@ -18,11 +18,11 @@ function Product({ product }) {
         </Link>
 
         <Card.Text as='div'>
-          <div className='my-3'> 
+          <div className='my-3'>
             {product.rating !== null ? (
-            <Rating value={product.rating} text={`${product.numReviews} reviews`} color={'#f8e825'} />
+              <Rating value={product.rating} text={`${product.numReviews} reviews`} color={'#f8e825'} />
             ) : (
-            <Rating value={product.rating} text={`0 reviews`} color={'#f8e825'} />
+              <Rating value={product.rating} text={`0 reviews`} color={'#f8e825'} />
             )}
           </div>
         </Card.Text>

@@ -57,6 +57,7 @@ function ProductEditScreen() {
 
     const submitHandler = (e) => {
         e.preventDefault()
+        console.log(category)
         dispatch(updateProduct({
             _id: productId.id,
             name,
@@ -80,7 +81,7 @@ function ProductEditScreen() {
             const { data } = await axios
                 .create({
                     headers: {
-                    'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data'
                     }
                 })
                 .post('/api/products/upload/', formData)
@@ -165,9 +166,10 @@ function ProductEditScreen() {
 
                                     as="select"
                                     // value={category.name}
-                                    onChange={(e) => setCategory(e.target.value)}
+                                    onChange={(e) => { setCategory(e.target.value); console.log(category) }}
                                 >
-                                    {categories?.map(categoryEx => (          
+                                    <option value=''></option>
+                                    {categories?.map(categoryEx => (
                                         <option key={categoryEx._id} value={categoryEx._id}>{categoryEx.name}</option>
                                     ))}
                                 </Form.Control>
@@ -189,7 +191,7 @@ function ProductEditScreen() {
 
                             <Button className="mb-3 rounded" type='submit' variant='primary'>
                                 Update
-                        </Button>
+                            </Button>
 
                         </Form>
                     )}

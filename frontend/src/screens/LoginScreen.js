@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Link , useLocation, useNavigate} from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
-import { login, googleLogin } from '../actions/userActions'
-// import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
+import { login } from '../actions/userActions'
 import GoogleLogin from 'react-google-login'
 
 
@@ -21,7 +20,7 @@ function LoginScreen() {
     const redirect = location.search ? location.search.split('=')[1] : '/'
 
     const userLogin = useSelector(state => state.userLogin)
-    const { error, loading, userInfo} = userLogin
+    const { error, loading, userInfo } = userLogin
 
     useEffect(() => {
         if (userInfo) {
@@ -37,7 +36,7 @@ function LoginScreen() {
 
     const responseGoogle = (response) => {
         console.log(response)
-      }
+    }
 
     return (
         <FormContainer>
@@ -65,7 +64,7 @@ function LoginScreen() {
                     >
                     </Form.Control>
                 </Form.Group>
-                <Button className="rounded" type='submit' variant='primary' style={{width: '100%', marginLeft: 0}}>
+                <Button className="rounded" type='submit' variant='primary' style={{ width: '100%', marginLeft: 0 }}>
                     Sign In
                 </Button>
             </Form>
@@ -85,7 +84,7 @@ function LoginScreen() {
                     onFailure={responseGoogle}
                 />
             </Row>
-            
+
         </FormContainer>
     )
 }

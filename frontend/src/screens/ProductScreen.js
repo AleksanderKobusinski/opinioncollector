@@ -26,9 +26,9 @@ function ProductScreen() {
 
     const productReviewCreate = useSelector(state => state.productReviewCreate)
     const {
-        error: errorProductReview, 
-        loading: loadingProductReview,  
-        success: successProductReview, 
+        error: errorProductReview,
+        loading: loadingProductReview,
+        success: successProductReview,
     } = productReviewCreate
 
     useEffect(() => {
@@ -42,35 +42,35 @@ function ProductScreen() {
 
     }, [dispatch, productId, successProductReview])
 
-  const submitHandler = (e) => {
-    e.preventDefault()
-    dispatch(createProductReview(
-        productId.id, {
-        rating,
-        comment
+    const submitHandler = (e) => {
+        e.preventDefault()
+        dispatch(createProductReview(
+            productId.id, {
+            rating,
+            comment
+        }
+        ))
     }
-    ))
-}
 
-const feedbackHandler = (e) => {
-    e.preventDefault()
-}
+    const feedbackHandler = (e) => {
+        e.preventDefault()
+    }
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-  
+
     return (
         <div><Row className='align-items-center'>
-                <Col>
-                    <Link to='/' className='btn btn-light my-3'>Go Back</Link>
-                </Col>
+            <Col>
+                <Link to='/' className='btn btn-light my-3'>Go Back</Link>
+            </Col>
 
-                <Col>
-                    <Button className='my-3 float-end' variant='warning' onClick={handleShow}>
-                        <i className="fa-solid fa-circle-exclamation"></i>
-                    </Button>
-                </Col>
-            </Row>
+            <Col>
+                <Button className='my-3 float-end' variant='warning' onClick={handleShow}>
+                    <i className="fa-solid fa-circle-exclamation"></i>
+                </Button>
+            </Col>
+        </Row>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -97,121 +97,121 @@ const feedbackHandler = (e) => {
                 </Modal.Body>
 
             </Modal>
-            
+
             {loading ?
-                <Loader/>
+                <Loader />
                 : error
-                    ?<Message variant='danger'>{error}</Message>
-                :(
-                    <div>
-                        <Row>
-                            <Col md={8}>
-                                <Image src={product.image} alt={product.name} fluid />
-                            </Col>
-                            <Col md={4}>
-                                <ListGroup variant='flush'>
-                                    <ListGroupItem>
-                                        <h3>{product.name}</h3>
-                                    </ListGroupItem>
-                                    <ListGroupItem>
-                                    {product.rating !== null ? (
-                                    <Rating value={product.rating} text={`${product.numReviews} reviews`} color={'#f8e825'} />
-                                    ) : (
-                                    <Rating value={product.rating} text={`0 reviews`} color={'#f8e825'} />
-                                    )}
-                                    </ListGroupItem>
-                                    <ListGroupItem>
-                                        {product.description}
-                                    </ListGroupItem>
-                                </ListGroup>
-                            </Col>
-                        </Row>
-                        <Row className='pt-5'>
-                            <Col md={8}>
-                                <Card>
-                                    <Card.Body>
-                                        <Card.Title>Reviews</Card.Title>
-                                    </Card.Body>
-                                
-                                    <ListGroup className="list-group-flush">
-                                    {product.reviews.length === 0 && <Message variant='info'>No Reviews</Message>}
-
-                                        {product.reviews.map((review) => (
-
-                                            <ListGroup.Item>
-                                                            {review.name}
-
-
-                                                            <p className="mb-0">
-                                                                {review.createdAt.substring(0, 10)}
-                                                            </p>
-
-                                                        <p className="mb-0">
-                                                            <Rating value={review.rating} color='#f8e825' />
-                                                            {review.comment}
-                                                        </p>
-
-                                            </ListGroup.Item>
-                                        ))}
-                                    </ListGroup>
-                                    {userInfo && !userInfo.isAdmin && (
-                                    <Card.Body>
-                                        <Card.Title>Write a review</Card.Title>
-
-                                            {loadingProductReview && <Loader />}
-                                            {successProductReview && <Message variant='success'>Review Submitted</Message>}
-                                            {errorProductReview && <Message variant='danger'>{errorProductReview}</Message>}
-
-                                            {userInfo ? (
-
-                                                <Form onSubmit={submitHandler}>
-                                                    <Form.Group className="mb-3 rounded" controlId='rating'>
-                                                        <Form.Label>Rating</Form.Label>
-                                                        <Form.Control
-                                                            as='select'
-                                                            value={rating}
-                                                            onChange={(e) => setRating(e.target.value)}
-                                                        >
-                                                            <option value=''>Select...</option>
-                                                            <option value='1'>1 - Poor</option>
-                                                            <option value='2'>2 - Fair</option>
-                                                            <option value='3'>3 - Good</option>
-                                                            <option value='4'>4 - Very Good</option>
-                                                            <option value='5'>5 - Excellent</option>
-                                                        </Form.Control>
-                                                    </Form.Group>
-
-                                                    <Form.Group className="mb-3 rounded" controlId='comment'>
-                                                        <Form.Label>Review</Form.Label>
-                                                        <Form.Control
-                                                            as='textarea'
-                                                            row='5'
-                                                            value={comment}
-                                                            onChange={(e) => setComment(e.target.value)}
-                                                        ></Form.Control>
-                                                    </Form.Group>
-
-                                                    <Button
-                                                        className="rounded"
-                                                        disabled={loadingProductReview}
-                                                        type='submit'
-                                                        variant='primary'
-                                                        style={{width: '100%', marginLeft: 0}}
-                                                    >
-                                                        Submit
-                                                    </Button>
-                                                </Form>
-
+                    ? <Message variant='danger'>{error}</Message>
+                    : (
+                        <div>
+                            <Row>
+                                <Col md={8}>
+                                    <Image src={product.image} alt={product.name} fluid />
+                                </Col>
+                                <Col md={4}>
+                                    <ListGroup variant='flush'>
+                                        <ListGroupItem>
+                                            <h3>{product.name}</h3>
+                                        </ListGroupItem>
+                                        <ListGroupItem>
+                                            {product.rating !== null ? (
+                                                <Rating value={product.rating} text={`${product.numReviews} reviews`} color={'#f8e825'} />
                                             ) : (
+                                                <Rating value={product.rating} text={`0 reviews`} color={'#f8e825'} />
+                                            )}
+                                        </ListGroupItem>
+                                        <ListGroupItem>
+                                            {product.description}
+                                        </ListGroupItem>
+                                    </ListGroup>
+                                </Col>
+                            </Row>
+                            <Row className='pt-5'>
+                                <Col md={8}>
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Title>Reviews</Card.Title>
+                                        </Card.Body>
+
+                                        <ListGroup className="list-group-flush">
+                                            {product.reviews.length === 0 && <Message variant='info'>No Reviews</Message>}
+
+                                            {product.reviews.map((review) => (
+
+                                                <ListGroup.Item>
+                                                    {review.name}
+
+
+                                                    <p className="mb-0">
+                                                        {review.createdAt.substring(0, 10)}
+                                                    </p>
+
+                                                    <p className="mb-0">
+                                                        <Rating value={review.rating} color='#f8e825' />
+                                                        {review.comment}
+                                                    </p>
+
+                                                </ListGroup.Item>
+                                            ))}
+                                        </ListGroup>
+                                        {userInfo && !userInfo.isAdmin && (
+                                            <Card.Body>
+                                                <Card.Title>Write a review</Card.Title>
+
+                                                {loadingProductReview && <Loader />}
+                                                {successProductReview && <Message variant='success'>Review Submitted</Message>}
+                                                {errorProductReview && <Message variant='danger'>{errorProductReview}</Message>}
+
+                                                {userInfo ? (
+
+                                                    <Form onSubmit={submitHandler}>
+                                                        <Form.Group className="mb-3 rounded" controlId='rating'>
+                                                            <Form.Label>Rating</Form.Label>
+                                                            <Form.Control
+                                                                as='select'
+                                                                value={rating}
+                                                                onChange={(e) => setRating(e.target.value)}
+                                                            >
+                                                                <option value=''>Select...</option>
+                                                                <option value='1'>1 - Poor</option>
+                                                                <option value='2'>2 - Fair</option>
+                                                                <option value='3'>3 - Good</option>
+                                                                <option value='4'>4 - Very Good</option>
+                                                                <option value='5'>5 - Excellent</option>
+                                                            </Form.Control>
+                                                        </Form.Group>
+
+                                                        <Form.Group className="mb-3 rounded" controlId='comment'>
+                                                            <Form.Label>Review</Form.Label>
+                                                            <Form.Control
+                                                                as='textarea'
+                                                                row='5'
+                                                                value={comment}
+                                                                onChange={(e) => setComment(e.target.value)}
+                                                            ></Form.Control>
+                                                        </Form.Group>
+
+                                                        <Button
+                                                            className="rounded"
+                                                            disabled={loadingProductReview}
+                                                            type='submit'
+                                                            variant='primary'
+                                                            style={{ width: '100%', marginLeft: 0 }}
+                                                        >
+                                                            Submit
+                                                        </Button>
+                                                    </Form>
+
+                                                ) : (
                                                     <Message variant='info'>Please <Link to='/login'>login</Link> to write a review</Message>
                                                 )}
-                                    </Card.Body>
-                                    )}
-                                </Card>
-                            </Col>
-                        </Row>
-                    </div>
-                )
+                                            </Card.Body>
+                                        )}
+                                    </Card>
+                                </Col>
+                            </Row>
+                        </div>
+                    )
             }
         </div>
     )

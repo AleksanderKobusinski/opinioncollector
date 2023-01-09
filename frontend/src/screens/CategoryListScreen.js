@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux'
@@ -39,14 +39,14 @@ function CategoryListScreen() {
             dispatch(listCategories())
         }
 
-    }, [ dispatch, navigate, userInfo, successDelete, successCreate, createdCategory ])
+    }, [dispatch, navigate, userInfo, successDelete, successCreate, createdCategory])
 
     const createCategoryHandler = () => {
         dispatch(createCategory())
     }
 
     const deleteHandler = (id) => {
-        if(window.confirm('Are you sure you want to delete this category?')){
+        if (window.confirm('Are you sure you want to delete this category?')) {
             dispatch(deleteCategory(id))
         }
     }

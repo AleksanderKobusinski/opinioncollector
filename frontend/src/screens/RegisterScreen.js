@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link , useLocation, useNavigate} from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
@@ -31,7 +31,7 @@ function RegisterScreen() {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        if(password !== confirmPassword){
+        if (password !== confirmPassword) {
             setMessage('Passwords do not match!')
         } else {
             dispatch(register(name, email, password))
@@ -46,7 +46,7 @@ function RegisterScreen() {
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
 
-            <Form.Group className="mb-3 rounded" controlId='name'>
+                <Form.Group className="mb-3 rounded" controlId='name'>
                     <Form.Label>Name</Form.Label>
                     <Form.Control
                         required
@@ -94,7 +94,7 @@ function RegisterScreen() {
                     </Form.Control>
                 </Form.Group>
 
-                <Button className="rounded" type='submit' variant='primary' style={{width: '100%', marginLeft: 0}}>
+                <Button className="rounded" type='submit' variant='primary' style={{ width: '100%', marginLeft: 0 }}>
                     Register
                 </Button>
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Row, Col, Dropdown } from 'react-bootstrap'
@@ -26,7 +26,7 @@ function HomeScreen() {
   useEffect(() => {
     dispatch(listProducts(keyword))
     dispatch(listCategories())
-  }, [ dispatch, keyword ])
+  }, [dispatch, keyword])
 
   const filterProducts = (filter) => {
     navigate(`/?filter=${filter}&page=1`)
@@ -35,44 +35,44 @@ function HomeScreen() {
   return (
     <div>
       <Row className='align-items-center'>
-          <Col>
-            <h1>Products</h1>
-          </Col>
+        <Col>
+          <h1>Products</h1>
+        </Col>
 
-          <Col className='text-right'>
-            <Dropdown className='d-flex float-end'>
-              <Dropdown.Toggle variant="outline-dark" id="dropdown-basic">
-                <i className="fa-solid fa-filter"></i>
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item key='None'
-                  onClick={() => {filterProducts('None');}}>
-                  ...
-                  </Dropdown.Item>  
-                  {categories?.map(category => (  
-                    <Dropdown.Item key={category._id} eventKey={category._id}
-                        onClick={() => {filterProducts(category._id);}}> 
-                        {category.name}
-                    </Dropdown.Item> 
-                  ))}
-              </Dropdown.Menu>
-            </Dropdown>
-          </Col>
+        <Col className='text-right'>
+          <Dropdown className='d-flex float-end'>
+            <Dropdown.Toggle variant="outline-dark" id="dropdown-basic">
+              <i className="fa-solid fa-filter"></i>
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item key='None'
+                onClick={() => { filterProducts('None'); }}>
+                ...
+              </Dropdown.Item>
+              {categories?.map(category => (
+                <Dropdown.Item key={category._id} eventKey={category._id}
+                  onClick={() => { filterProducts(category._id); }}>
+                  {category.name}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Col>
       </Row>
-      
+
       {loading ? <Loader />
         : error ? <Message variant='danger'>{error}</Message>
           :
           <Row>
             {products?.map(product => (
-                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                    <Product product={product} />
-                </Col>
+              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                <Product product={product} />
+              </Col>
             ))}
           </Row>
-    }
+      }
 
-      
+
     </div>
   )
 }

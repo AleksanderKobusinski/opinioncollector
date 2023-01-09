@@ -49,7 +49,7 @@ export const categoryListReducer = (state = { categories: [] }, action) => {
 export const categoryDetailsReducer = (state = { category: {} }, action) => {
     switch (action.type) {
         case CATEGORY_DETAILS_REQUEST:
-            return { loading: true, ...state}
+            return { loading: true, ...state }
 
         case CATEGORY_DETAILS_SUCCESS:
             return { loading: false, category: action.payload }
@@ -66,10 +66,10 @@ export const categoryDetailsReducer = (state = { category: {} }, action) => {
 }
 
 
-export const categoryDeleteReducer = (state = {  }, action) => {
+export const categoryDeleteReducer = (state = {}, action) => {
     switch (action.type) {
         case CATEGORY_DELETE_REQUEST:
-            return { loading: true}
+            return { loading: true }
 
         case CATEGORY_DELETE_SUCCESS:
             return { loading: false, success: true }

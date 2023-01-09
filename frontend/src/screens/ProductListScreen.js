@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import Paginate from '../components/Paginate'
 import { listProducts, deleteProduct, createProduct } from '../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
@@ -15,7 +14,7 @@ function ProductListScreen() {
     const dispatch = useDispatch()
 
     const productList = useSelector(state => state.productList)
-    const { loading, error, products, pages, page } = productList
+    const { loading, error, products } = productList
 
     const productDelete = useSelector(state => state.productDelete)
     const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete
@@ -41,7 +40,7 @@ function ProductListScreen() {
             dispatch(listProducts(keyword))
         }
 
-    }, [ dispatch, navigate, userInfo, successDelete, successCreate, createdProduct, keyword ])
+    }, [dispatch, navigate, userInfo, successDelete, successCreate, createdProduct, keyword])
 
     const createProductHandler = () => {
         dispatch(createProduct())
@@ -114,7 +113,7 @@ function ProductListScreen() {
                                     ))}
                                 </tbody>
                             </Table>
-                            <Paginate pages={pages} page={page} isAdmin={true} />
+
                         </div>
                     )}
         </div>
