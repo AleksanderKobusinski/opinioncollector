@@ -25,6 +25,12 @@ import {
     categoryCreateReducer,
     categoryUpdateReducer
 } from './reducers/categoryReducers'
+import {
+    messageListReducer,
+    messageDetailsReducer,
+    messageDeleteReducer,
+    messageCreateReducer
+} from './reducers/messageReducers'
 
 const reducer = combineReducers({
     productList: productListReducer,
@@ -46,7 +52,12 @@ const reducer = combineReducers({
     categoryDetails: categoryDetailsReducer,
     categoryDelete: categoryDeleteReducer,
     categoryCreate: categoryCreateReducer,
-    categoryUpdate: categoryUpdateReducer
+    categoryUpdate: categoryUpdateReducer,
+
+    messageList: messageListReducer,
+    messageDetails: messageDetailsReducer,
+    messageDelete: messageDeleteReducer,
+    messageCreate: messageCreateReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ?

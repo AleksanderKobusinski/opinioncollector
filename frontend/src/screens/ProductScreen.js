@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { Row, Col, Image, ListGroup, Button, Card, ListGroupItem, Form, Modal } from 'react-bootstrap'
+import { Row, Col, Image, ListGroup, Button, Card, ListGroupItem, Form, Modal, Alert } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { listProductDetails, createProductReview } from '../actions/productActions'
+import { createMessage } from '../actions/messageActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
 function ProductScreen() {
@@ -14,6 +15,8 @@ function ProductScreen() {
     const [comment, setComment] = useState('')
     const [show, setShow] = useState(false);
     const [message, setMessage] = useState('')
+    const [productName, setProductName] = useState('')
+    const [showAlert, setShowAlert] = useState(false);
 
     const productId = useParams();
     const dispatch = useDispatch()
@@ -46,31 +49,42 @@ function ProductScreen() {
         e.preventDefault()
         dispatch(createProductReview(
             productId.id, {
-            rating,
-            comment
-        }
+                rating,
+                comment
+            }
         ))
     }
 
     const feedbackHandler = (e) => {
         e.preventDefault()
+        dispatch(createMessage(
+                {product: productName,
+                text: message}
+        ))
+        setShowAlert(true)
     }
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     return (
-        <div><Row className='align-items-center'>
-            <Col>
-                <Link to='/' className='btn btn-light my-3'>Go Back</Link>
-            </Col>
 
-            <Col>
-                <Button className='my-3 float-end' variant='warning' onClick={handleShow}>
-                    <i className="fa-solid fa-circle-exclamation"></i>
-                </Button>
-            </Col>
-        </Row>
+        <div>
+
+                <Alert variant='success' show={showAlert} onClose={() => setShowAlert(false)} dismissible>
+                    Feedback sent!
+                </Alert>
+            <Row className='align-items-center'>
+                <Col>
+                    <Link to='/' className='btn btn-light my-3'>Go Back</Link>
+                </Col>
+
+                <Col>
+                    <Button className='my-3 float-end' variant='outline-warning' onClick={handleShow}>
+                        <i className="fa-solid fa-circle-exclamation"></i>
+                    </Button>
+                </Col>
+            </Row>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -86,7 +100,7 @@ function ProductScreen() {
                                 type='text'
                                 placeholder='Enter message'
                                 value={message}
-                                onChange={(e) => setMessage(e.target.value)}
+                                onChange={(e) => {setMessage(e.target.value); setProductName(product.name)}}
                             >
                             </Form.Control>
                         </Form.Group>

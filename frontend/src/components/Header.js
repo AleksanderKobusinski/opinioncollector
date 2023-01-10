@@ -44,6 +44,10 @@ function Header() {
                     <NavDropdown.Item>Categories</NavDropdown.Item>
                   </LinkContainer>
 
+                  <LinkContainer to='/admin/messageList'>
+                    <NavDropdown.Item>Messages</NavDropdown.Item>
+                  </LinkContainer>
+
                 </NavDropdown>
               )}
               {userInfo ? (

@@ -55,7 +55,8 @@ def createProduct(request):
         name='Sample Name',
         brand='Sample Brand',
         # category=Product.objects.create,
-        description=''
+        description='',
+        visible=True
     )
 
     serializer = ProductSerializer(product, many=False)
@@ -102,7 +103,6 @@ def uploadImage(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createProductReview(request, pk):
-    print(request.data)
     user = request.user
     product = Product.objects.get(_id=pk)
     data = request.data
