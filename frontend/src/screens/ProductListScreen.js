@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { listProducts, deleteProduct, createProduct } from '../actions/productActions'
+import { listProducts, deleteProduct, createProduct, updateVisibleProduct } from '../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
 function ProductListScreen() {
@@ -18,6 +18,9 @@ function ProductListScreen() {
 
     const productDelete = useSelector(state => state.productDelete)
     const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete
+    
+    const productUpdateVisible = useSelector(state => state.productUpdateVisible)
+    const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdateVisible
 
     const productCreate = useSelector(state => state.productCreate)
     const { loading: loadingCreate, error: errorCreate, success: successCreate, product: createdProduct } = productCreate
@@ -40,7 +43,7 @@ function ProductListScreen() {
             dispatch(listProducts(keyword))
         }
 
-    }, [dispatch, navigate, userInfo, successDelete, successCreate, createdProduct, keyword])
+    }, [dispatch, navigate, userInfo, successDelete, successUpdate, successCreate, createdProduct, keyword])
 
     const createProductHandler = () => {
         dispatch(createProduct())
@@ -50,6 +53,10 @@ function ProductListScreen() {
         if (window.confirm('Are you sure you want to delete this product?')) {
             dispatch(deleteProduct(id))
         }
+    }
+
+    const updateVisibleHandler = (id) => {
+        dispatch(updateVisibleProduct(id))
     }
 
     return (
@@ -69,6 +76,10 @@ function ProductListScreen() {
             {loadingDelete && <Loader />}
             {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
 
+            
+            {loadingUpdate && <Loader />}
+            {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
+
 
             {loadingCreate && <Loader />}
             {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
@@ -86,6 +97,7 @@ function ProductListScreen() {
                                         <th>NAME</th>
                                         <th>CATEGORY</th>
                                         <th>BRAND</th>
+                                        <th>VISIBLE</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -97,6 +109,12 @@ function ProductListScreen() {
                                             <td>{product.name}</td>
                                             <td>{product.category}</td>
                                             <td>{product.brand}</td>
+                                            {product.isVisible ?
+                                                <td>Yes</td>
+                                                :
+                                                <td>No</td>
+                                            }
+                                            
 
                                             <td>
                                                 <LinkContainer to={`/admin/product/${product._id}/edit`}>
@@ -104,6 +122,10 @@ function ProductListScreen() {
                                                         <i className='fas fa-edit'></i>
                                                     </Button>
                                                 </LinkContainer>
+
+                                                <Button variant='info' className='btn-sm' onClick={() => updateVisibleHandler(product._id)}>
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </Button>
 
                                                 <Button variant='danger' className='btn-sm' onClick={() => deleteHandler(product._id)}>
                                                     <i className='fas fa-trash'></i>

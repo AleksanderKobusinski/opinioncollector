@@ -19,6 +19,10 @@ import {
     PRODUCT_UPDATE_REQUEST,
     PRODUCT_UPDATE_SUCCESS,
     PRODUCT_UPDATE_FAIL,
+    
+    PRODUCT_UPDATE_VISIBLE_REQUEST,
+    PRODUCT_UPDATE_VISIBLE_SUCCESS,
+    PRODUCT_UPDATE_VISIBLE_FAIL,
 
     PRODUCT_CREATE_REVIEW_REQUEST,
     PRODUCT_CREATE_REVIEW_SUCCESS,
@@ -165,7 +169,6 @@ export const updateProduct = (product) => async (dispatch, getState) => {
             })
             .put(
                 `/api/products/update/${product._id}/`,
-                product
             )
 
         dispatch({
@@ -183,6 +186,42 @@ export const updateProduct = (product) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: PRODUCT_UPDATE_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message,
+        })
+    }
+}
+
+export const updateVisibleProduct = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: PRODUCT_UPDATE_VISIBLE_REQUEST
+        })
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const { data } = await axios
+            .create({
+                headers: {
+                    // 'Content-type': 'application/json',
+                    Authorization: `Bearer ${userInfo.token}`
+                }
+            })
+            .put(
+                `/api/products/updateVisible/${id}/`
+            )
+
+        dispatch({
+            type: PRODUCT_UPDATE_VISIBLE_SUCCESS,
+            payload: data,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PRODUCT_UPDATE_VISIBLE_FAIL,
             payload: error.response && error.response.data.detail
                 ? error.response.data.detail
                 : error.message,

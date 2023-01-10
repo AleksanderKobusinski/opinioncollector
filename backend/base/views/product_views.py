@@ -56,7 +56,7 @@ def createProduct(request):
         brand='Sample Brand',
         # category=Product.objects.create,
         description='',
-        visible=True
+        isVisible=True
     )
 
     serializer = ProductSerializer(product, many=False)
@@ -72,6 +72,19 @@ def updateProduct(request, pk):
     product.brand = data['brand']
     product.category = Category.objects.get(_id=data['category'])
     product.description = data['description']
+
+    product.save()
+
+    serializer = ProductSerializer(product, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateProductVisibility(request, pk):
+    
+    product = Product.objects.get(_id=pk)
+    product.isVisible = not product.isVisible
 
     product.save()
 
