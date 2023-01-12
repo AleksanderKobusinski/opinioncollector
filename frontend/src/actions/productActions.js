@@ -29,11 +29,14 @@ import {
     PRODUCT_CREATE_REVIEW_FAIL,
 } from '../constants/productConstants'
 
-export const listProducts = (keyword = '', filter = '') => async (dispatch) => {
+export const listProducts = () => async (dispatch, getState) => {
     try {
-        dispatch({ type: PRODUCT_LIST_REQUEST })
+        dispatch({
+             type: PRODUCT_LIST_REQUEST 
+        })
 
-        const { data } = await axios.get(`/api/products?${keyword}${filter}`)
+        const { data } = await axios
+            .get(`/products`)
 
         dispatch({
             type: PRODUCT_LIST_SUCCESS,
@@ -43,8 +46,8 @@ export const listProducts = (keyword = '', filter = '') => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: PRODUCT_LIST_FAIL,
-            payload: error.response && error.response.data.message
-                ? error.response.data.message
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
                 : error.message,
         })
     }
@@ -54,7 +57,7 @@ export const listProductDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: PRODUCT_DETAILS_REQUEST })
 
-        const { data } = await axios.get(`/api/products/${id}`)
+        const { data } = await axios.get(`/products/${id}`)
 
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
@@ -82,14 +85,14 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
         } = getState()
 
         const { data } = await axios
-            .create({
-                headers: {
-                    'Content-type': 'application/json',
-                    Authorization: `Bearer ${userInfo.token}`
-                }
-            })
+            // .create({
+            //     headers: {
+            //         'Content-type': 'application/json',
+            //         Authorization: `Bearer ${userInfo.token}`
+            //     }
+            // })
             .delete(
-                `/api/products/delete/${id}/`
+                `/products/delete/${id}`
             )
 
         dispatch({
@@ -121,14 +124,14 @@ export const createProduct = () => async (dispatch, getState) => {
         } = getState()
 
         const { data } = await axios
-            .create({
-                headers: {
-                    'Content-type': 'application/json',
-                    Authorization: `Bearer ${userInfo.token}`
-                }
-            })
+            // .create({
+            //     headers: {
+            //         'Content-type': 'application/json',
+            //         Authorization: `Bearer ${userInfo.token}`
+            //     }
+            // })
             .post(
-                `/api/products/create/`,
+                `/products/create`,
                 {}
             )
 
@@ -161,14 +164,14 @@ export const updateProduct = (product) => async (dispatch, getState) => {
         } = getState()
 
         const { data } = await axios
-            .create({
-                headers: {
-                    // 'Content-type': 'application/json',
-                    Authorization: `Bearer ${userInfo.token}`
-                }
-            })
+            // .create({
+            //     headers: {
+            //         // 'Content-type': 'application/json',
+            //         Authorization: `Bearer ${userInfo.token}`
+            //     }
+            // })
             .put(
-                `/api/products/update/${product._id}/`,
+                `/products/update/${product._id}`,
             )
 
         dispatch({
@@ -204,12 +207,12 @@ export const updateVisibleProduct = (id) => async (dispatch, getState) => {
         } = getState()
 
         const { data } = await axios
-            .create({
-                headers: {
-                    // 'Content-type': 'application/json',
-                    Authorization: `Bearer ${userInfo.token}`
-                }
-            })
+            // .create({
+            //     headers: {
+            //         // 'Content-type': 'application/json',
+            //         Authorization: `Bearer ${userInfo.token}`
+            //     }
+            // })
             .put(
                 `/api/products/updateVisible/${id}/`
             )
@@ -240,13 +243,13 @@ export const createProductReview = (productId, review) => async (dispatch, getSt
         } = getState()
 
         const { data } = await axios
-            .create({
-                headers: {
-                    Authorization: `Bearer ${userInfo.token}`
-                }
-            })
+            // .create({
+            //     headers: {
+            //         Authorization: `Bearer ${userInfo.token}`
+            //     }
+            // })
             .post(
-                `/api/products/${productId}/reviews/`,
+                `/products/${productId}/opinions`,
                 review
             )
 

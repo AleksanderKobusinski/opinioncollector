@@ -29,13 +29,13 @@ export const listMessages = () => async (dispatch, getState) => {
         } = getState()
 
         const { data } = await axios
-            .create({
-                headers: {
-                Authorization: `Bearer ${userInfo.token}`,
-                'Content-Type': 'application/json',
-                },
-            })
-            .get(`/api/messages`)
+            // .create({
+            //     headers: {
+            //     Authorization: `Bearer ${userInfo.token}`,
+            //     'Content-Type': 'application/json',
+            //     },
+            // })
+            .get(`/messages`)
 
         dispatch({
             type: MESSAGE_LIST_SUCCESS,
@@ -63,12 +63,12 @@ export const getMessageDetails = (id) => async (dispatch, getState) => {
         } = getState()
 
         const { data } = await axios
-            .create({
-                headers: {
-                    Authorization: `Bearer ${userInfo.token}`,
-                    'Content-Type': 'application/json',
-                },
-            })
+            // .create({
+            //     headers: {
+            //         Authorization: `Bearer ${userInfo.token}`,
+            //         'Content-Type': 'application/json',
+            //     },
+            // })
             .get(`/api/messages/${id}/`)
 
         dispatch({
@@ -97,12 +97,12 @@ export const deleteMessage = (id) => async (dispatch, getState) => {
         } = getState()
 
         const { data } = await axios
-            .create({
-                headers: {
-                    Authorization: `Bearer ${userInfo.token}`,
-                    'Content-Type': 'application/json',
-                },
-            })
+            // .create({
+            //     headers: {
+            //         Authorization: `Bearer ${userInfo.token}`,
+            //         'Content-Type': 'application/json',
+            //     },
+            // })
             .delete(`/api/messages/delete/${id}`)
 
         dispatch({

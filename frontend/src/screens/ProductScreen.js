@@ -119,20 +119,16 @@ function ProductScreen() {
                     : (
                         <div>
                             <Row>
-                                <Col md={8}>
+                                {/* <Col md={8}>
                                     <Image src={product.image} alt={product.name} fluid />
-                                </Col>
+                                </Col> */}
                                 <Col md={4}>
                                     <ListGroup variant='flush'>
                                         <ListGroupItem>
                                             <h3>{product.name}</h3>
                                         </ListGroupItem>
                                         <ListGroupItem>
-                                            {product.rating !== null ? (
-                                                <Rating value={product.rating} text={`${product.numReviews} reviews`} color={'#f8e825'} />
-                                            ) : (
-                                                <Rating value={product.rating} text={`0 reviews`} color={'#f8e825'} />
-                                            )}
+                                                <Rating value={product.avg_rating} color={'#f8e825'} />
                                         </ListGroupItem>
                                         <ListGroupItem>
                                             {product.description}
@@ -148,9 +144,9 @@ function ProductScreen() {
                                         </Card.Body>
 
                                         <ListGroup className="list-group-flush">
-                                            {product.reviews.length === 0 && <Message variant='info'>No Reviews</Message>}
+                                            {/* {product?.reviews.length === 0 && <Message variant='info'>No Reviews</Message>}
 
-                                            {product.reviews.map((review) => (
+                                            {product?.reviews.map((review) => (
 
                                                 <ListGroup.Item>
                                                     {review.name}
@@ -166,7 +162,7 @@ function ProductScreen() {
                                                     </p>
 
                                                 </ListGroup.Item>
-                                            ))}
+                                            ))} */}
                                         </ListGroup>
                                         {userInfo && !userInfo.isAdmin && (
                                             <Card.Body>

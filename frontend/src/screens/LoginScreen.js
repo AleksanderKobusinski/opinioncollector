@@ -47,7 +47,7 @@ function LoginScreen() {
                 <Form.Group className="mb-3 rounded" controlId='email'>
                     <Form.Label>Email Address</Form.Label>
                     <Form.Control
-                        type='email'
+                        type='name'
                         placeholder='Email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}

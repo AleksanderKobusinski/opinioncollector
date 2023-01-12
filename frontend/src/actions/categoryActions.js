@@ -29,7 +29,7 @@ export const listCategories = () => async (dispatch, getState) => {
         })
 
         const { data } = await axios
-            .get(`/api/categories`)
+            .get(`/categories`)
 
         dispatch({
             type: CATEGORY_LIST_SUCCESS,
@@ -57,13 +57,13 @@ export const getCategoryDetails = (id) => async (dispatch, getState) => {
         } = getState()
 
         const { data } = await axios
-            .create({
-                headers: {
-                    Authorization: `Bearer ${userInfo.token}`,
-                    'Content-Type': 'application/json',
-                },
-            })
-            .get(`/api/categories/${id}/`)
+            // .create({
+            //     headers: {
+            //         Authorization: `Bearer ${userInfo.token}`,
+            //         'Content-Type': 'application/json',
+            //     },
+            // })
+            .get(`/categories/${id}`)
 
         dispatch({
             type: CATEGORY_DETAILS_SUCCESS,
@@ -91,13 +91,13 @@ export const deleteCategory = (id) => async (dispatch, getState) => {
         } = getState()
 
         const { data } = await axios
-            .create({
-                headers: {
-                    Authorization: `Bearer ${userInfo.token}`,
-                    'Content-Type': 'application/json',
-                },
-            })
-            .delete(`/api/categories/delete/${id}`)
+            // .create({
+            //     headers: {
+            //         Authorization: `Bearer ${userInfo.token}`,
+            //         'Content-Type': 'application/json',
+            //     },
+            // })
+            .delete(`/categories/delete/${id}`)
 
         dispatch({
             type: CATEGORY_DELETE_SUCCESS,
@@ -124,14 +124,14 @@ export const createCategory = () => async (dispatch, getState) => {
         } = getState()
 
         const { data } = await axios
-            .create({
-                headers: {
-                    'Content-type': 'application/json',
-                    Authorization: `Bearer ${userInfo.token}`
-                }
-            })
+            // .create({
+            //     headers: {
+            //         'Content-type': 'application/json',
+            //         Authorization: `Bearer ${userInfo.token}`
+            //     }
+            // })
             .post(
-                `/api/categories/create/`,
+                `/categories/create`,
                 {}
             )
 
@@ -162,14 +162,14 @@ export const updateCategory = (category) => async (dispatch, getState) => {
         } = getState()
 
         const { data } = await axios
-            .create({
-                headers: {
-                    Authorization: `Bearer ${userInfo.token}`,
-                    'Content-Type': 'application/json',
-                },
-            })
+            // .create({
+            //     headers: {
+            //         Authorization: `Bearer ${userInfo.token}`,
+            //         'Content-Type': 'application/json',
+            //     },
+            // })
             .put(
-                `/api/categories/update/${category._id}/`,
+                `/categories/update/${category._id}`,
                 category,
             )
 

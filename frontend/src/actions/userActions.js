@@ -47,7 +47,7 @@ export const login = (email, password) => async (dispatch) => {
             },
         })
         .post(
-            '/api/users/login/',
+            '/users/login',
             { 'username':email, 'password':password }
         )
         
@@ -82,7 +82,7 @@ export const register = (name, email, password) => async (dispatch) => {
         })
 
         const { data } = await axios.post(
-            '/api/users/register/',
+            '/users/create',
             { 'name': name, 'email': email, 'password': password }
         )
         
@@ -125,7 +125,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
                 'Content-Type': 'application/json',
                 },
             })
-            .get(`/api/users/${id}/`)
+            .get(`/users/${id}`)
         
         dispatch({
             type: USER_DETAILS_SUCCESS,
@@ -159,7 +159,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
                 'Content-Type': 'application/json',
                 },
             })
-            .put(`/api/users/profile/update/`, user)
+            .put(`/users/update/${user.id}`, user)
         
         dispatch({
             type: USER_UPDATE_PROFILE_SUCCESS,
@@ -200,7 +200,7 @@ export const listUsers = () => async (dispatch, getState) => {
                 'Content-Type': 'application/json',
                 },
             })
-            .get(`/api/users/`)
+            .get(`/users`)
         
         dispatch({
             type: USER_LIST_SUCCESS,
@@ -234,7 +234,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
                 'Content-Type': 'application/json',
                 },
             })
-            .delete(`/api/users/delete/${id}`)
+            .delete(`/users/delete/${id}`)
         
         dispatch({
             type: USER_DELETE_SUCCESS,
@@ -269,7 +269,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
             },
         })
         .put(
-            `/api/users/update/${user._id}/`,
+            `/users/update/${user._id}`,
             user,
         )
 

@@ -21,15 +21,13 @@ function HomeScreen() {
   const categoryList = useSelector(state => state.categoryList)
   const { error: errorCategory, loading: loadingCategory, categories } = categoryList
 
-  let keyword = searchParams
-
   useEffect(() => {
-    dispatch(listProducts(keyword))
+    dispatch(listProducts())
     dispatch(listCategories())
-  }, [dispatch, keyword])
+  }, [dispatch])
 
   const filterProducts = (filter) => {
-    navigate(`/?filter=${filter}&page=1`)
+    // navigate(`/?filter=${filter}&page=1`)
   }
 
   return (
@@ -50,8 +48,8 @@ function HomeScreen() {
                 ...
               </Dropdown.Item>
               {categories?.map(category => (
-                <Dropdown.Item key={category._id} eventKey={category._id}
-                  onClick={() => { filterProducts(category._id); }}>
+                <Dropdown.Item key={category.id} eventKey={category.id}
+                  onClick={() => { filterProducts(category.id); }}>
                   {category.name}
                 </Dropdown.Item>
               ))}
@@ -64,8 +62,8 @@ function HomeScreen() {
         : error ? <Message variant='danger'>{error}</Message>
           :
           <Row>
-            {products.filter( product => product.isVisible).map(product => (
-              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+            {products?.map(product => (
+              <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
                 <Product product={product} />
               </Col>
             ))}
