@@ -5,29 +5,9 @@ function Rating({ value, text, color }) {
     <div className='rating'>
       <span>
         <i style={{ color }} className={
-          value >= 1
-            ? 'fas fa-star'
-            : value >= 0.5
-              ? 'fas fa-star-half-alt'
-              : 'far fa-star'
-        }>
-        </i>
-      </span>
-      <span>
-        <i style={{ color }} className={
           value >= 2
             ? 'fas fa-star'
-            : value >= 1.5
-              ? 'fas fa-star-half-alt'
-              : 'far fa-star'
-        }>
-        </i>
-      </span>
-      <span>
-        <i style={{ color }} className={
-          value >= 3
-            ? 'fas fa-star'
-            : value >= 2.5
+            : value >= 1
               ? 'fas fa-star-half-alt'
               : 'far fa-star'
         }>
@@ -37,7 +17,7 @@ function Rating({ value, text, color }) {
         <i style={{ color }} className={
           value >= 4
             ? 'fas fa-star'
-            : value >= 3.5
+            : value >= 3
               ? 'fas fa-star-half-alt'
               : 'far fa-star'
         }>
@@ -45,9 +25,29 @@ function Rating({ value, text, color }) {
       </span>
       <span>
         <i style={{ color }} className={
-          value >= 5
+          value >= 6
             ? 'fas fa-star'
-            : value >= 4.5
+            : value >= 5
+              ? 'fas fa-star-half-alt'
+              : 'far fa-star'
+        }>
+        </i>
+      </span>
+      <span>
+        <i style={{ color }} className={
+          value >= 8
+            ? 'fas fa-star'
+            : value >= 7
+              ? 'fas fa-star-half-alt'
+              : 'far fa-star'
+        }>
+        </i>
+      </span>
+      <span>
+        <i style={{ color }} className={
+          value >= 10
+            ? 'fas fa-star'
+            : value >= 9
               ? 'fas fa-star-half-alt'
               : 'far fa-star'
         }>

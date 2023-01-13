@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Row, Col, Dropdown } from 'react-bootstrap'
@@ -13,7 +13,11 @@ function HomeScreen() {
   let navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
+  const [filterCategory, setFilterCategory] = useState('None')
+
+  let keyword = searchParams.get("keyword")
+  if (keyword == null) keyword = ''
 
   const productList = useSelector(state => state.productList)
   const { error, loading, products } = productList
@@ -25,10 +29,6 @@ function HomeScreen() {
     dispatch(listProducts())
     dispatch(listCategories())
   }, [dispatch])
-
-  const filterProducts = (filter) => {
-    // navigate(`/?filter=${filter}&page=1`)
-  }
 
   return (
     <div>
@@ -44,12 +44,12 @@ function HomeScreen() {
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item key='None'
-                onClick={() => { filterProducts('None'); }}>
+                onClick={() => { setFilterCategory('None'); }}>
                 ...
               </Dropdown.Item>
               {categories?.map(category => (
                 <Dropdown.Item key={category.id} eventKey={category.id}
-                  onClick={() => { filterProducts(category.id); }}>
+                  onClick={() => { setFilterCategory(category.id); }}>
                   {category.name}
                 </Dropdown.Item>
               ))}
@@ -62,7 +62,13 @@ function HomeScreen() {
         : error ? <Message variant='danger'>{error}</Message>
           :
           <Row>
-            {products?.map(product => (
+            {filterCategory == 'None' ?
+              products?.filter( product => !product.hidden).filter( product => product.name.toLowerCase().includes(keyword?.toLowerCase()) ).map(product => (
+                <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
+                  <Product product={product} />
+                </Col>
+              ))
+            : products?.filter( product => !product.hidden).filter( product => product.name.toLowerCase().includes(keyword?.toLowerCase()) ).filter( product => product.category.id == filterCategory).map(product => (
               <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
                 <Product product={product} />
               </Col>

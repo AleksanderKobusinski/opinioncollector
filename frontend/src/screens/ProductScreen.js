@@ -5,7 +5,7 @@ import { Row, Col, Image, ListGroup, Button, Card, ListGroupItem, Form, Modal, A
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { listProductDetails, createProductReview } from '../actions/productActions'
+import { listProductDetails, createProductReview, listProductReviews } from '../actions/productActions'
 import { createMessage } from '../actions/messageActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
@@ -23,6 +23,9 @@ function ProductScreen() {
 
     const productDetails = useSelector(state => state.productDetails)
     const { error, loading, product } = productDetails
+
+    const productReviewList = useSelector(state => state.productReviewList)
+    const { error: errorReview, loading: loadingReview, reviews } = productReviewList
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -42,6 +45,7 @@ function ProductScreen() {
         }
 
         dispatch(listProductDetails(productId.id))
+        dispatch(listProductReviews(productId.id))
 
     }, [dispatch, productId, successProductReview])
 
@@ -58,7 +62,7 @@ function ProductScreen() {
     const feedbackHandler = (e) => {
         e.preventDefault()
         dispatch(createMessage(
-                {product: productName,
+                {product: productId,
                 text: message}
         ))
         setShowAlert(true)
@@ -66,6 +70,8 @@ function ProductScreen() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    console.log(reviews)
 
     return (
 
@@ -144,25 +150,25 @@ function ProductScreen() {
                                         </Card.Body>
 
                                         <ListGroup className="list-group-flush">
-                                            {/* {product?.reviews.length === 0 && <Message variant='info'>No Reviews</Message>}
+                                            {reviews.length === 0 && <Message variant='info'>No Reviews</Message>}
 
-                                            {product?.reviews.map((review) => (
+                                            {reviews?.map((review) => (
 
                                                 <ListGroup.Item>
-                                                    {review.name}
+                                                    {review.user.first_name} {review.user.last_name}
 
 
-                                                    <p className="mb-0">
+                                                    {/* <p className="mb-0">
                                                         {review.createdAt.substring(0, 10)}
-                                                    </p>
+                                                    </p> */}
 
                                                     <p className="mb-0">
-                                                        <Rating value={review.rating} color='#f8e825' />
-                                                        {review.comment}
+                                                        <Rating value={review.grade} color='#f8e825' />
+                                                        {review.description}
                                                     </p>
 
                                                 </ListGroup.Item>
-                                            ))} */}
+                                            ))}
                                         </ListGroup>
                                         {userInfo && !userInfo.isAdmin && (
                                             <Card.Body>
@@ -183,11 +189,16 @@ function ProductScreen() {
                                                                 onChange={(e) => setRating(e.target.value)}
                                                             >
                                                                 <option value=''>Select...</option>
-                                                                <option value='1'>1 - Poor</option>
-                                                                <option value='2'>2 - Fair</option>
-                                                                <option value='3'>3 - Good</option>
-                                                                <option value='4'>4 - Very Good</option>
-                                                                <option value='5'>5 - Excellent</option>
+                                                                <option value='1'>1</option>
+                                                                <option value='2'>2</option>
+                                                                <option value='3'>3</option>
+                                                                <option value='4'>4</option>
+                                                                <option value='5'>5</option>
+                                                                <option value='6'>6</option>
+                                                                <option value='7'>7</option>
+                                                                <option value='8'>8</option>
+                                                                <option value='9'>9</option>
+                                                                <option value='10'>10</option>
                                                             </Form.Control>
                                                         </Form.Group>
 
