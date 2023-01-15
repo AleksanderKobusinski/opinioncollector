@@ -297,7 +297,7 @@ export const googleLogin = async (accesstoken) => {
     let res = await axios.post(
       "/rest-auth/google/",
       {
-        access_token: accesstoken,
+        access_token: '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',
       }
     );
     console.log(res);

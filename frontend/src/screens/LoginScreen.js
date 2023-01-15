@@ -4,6 +4,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import { SignInButton } from '../components/SignInButton'
 import FormContainer from '../components/FormContainer'
 import { login, googleLogin } from '../actions/userActions'
 import GoogleLogin from 'react-google-login'
@@ -77,8 +78,9 @@ function LoginScreen() {
                 </Col>
             </Row>
             <Row className='py-3'>
+                {/* <SignInButton /> */}
                 <GoogleLogin
-                    clientId="<Google Client ID>"
+                    clientId="662396126009-bhsnhi6tonm1vrpspfj61259eifqokg5.apps.googleusercontent.com"
                     buttonText="LOGIN WITH GOOGLE"
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
