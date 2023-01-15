@@ -6,6 +6,9 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
 import { register } from '../actions/userActions'
+import { googleLogin } from '../actions/userActions'
+import { GoogleLogin } from 'react-google-login';
+import { gapi } from 'gapi-script';
 
 function RegisterScreen() {
     const [name, setName] = useState('')
@@ -13,6 +16,7 @@ function RegisterScreen() {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [message, setMessage] = useState('')
+    const [ profile, setProfile ] = useState([]);
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -23,10 +27,29 @@ function RegisterScreen() {
     const userRegister = useSelector(state => state.userRegister)
     const { error, loading, userInfo } = userRegister
 
+    const clientId = "662396126009-bhsnhi6tonm1vrpspfj61259eifqokg5.apps.googleusercontent.com"
+    const onSuccess = (res) => {
+        setProfile(res.profileObj)
+        dispatch(register(profile.givenName, profile.email, profile.googleId))
+        setProfile(null);
+    }
+
+    const onFailure = (err) => {
+        console.log('failed', err);
+    }
+
     useEffect(() => {
         if (userInfo) {
             navigate(redirect)
         }
+
+    //     const initClient = () => {
+    //         gapi.client.init({
+    //         clientId: clientId,
+    //         scope: ''
+    //     });
+    // };
+    // gapi.load('client:auth2', initClient);
     }, [navigate, userInfo, redirect])
 
     const submitHandler = (e) => {
@@ -42,7 +65,7 @@ function RegisterScreen() {
         <FormContainer>
             <h1>Register</h1>
             {message && <Message variant='danger'>{message}</Message>}
-            {error && <Message variant='danger'>{error}</Message>}
+            {/* {error && <Message variant='danger'>{error}</Message>} */}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
 
@@ -106,6 +129,16 @@ function RegisterScreen() {
                         Sign In
                     </Link>
                 </Col>
+            </Row>
+            <Row className='py-3'>
+                <GoogleLogin
+                    clientId="662396126009-bhsnhi6tonm1vrpspfj61259eifqokg5.apps.googleusercontent.com"
+                    buttonText="REGISTER WITH GOOGLE"
+                    onSuccess={onSuccess}
+                    onFailure={onFailure}
+                    cookiePolicy={'single_host_origin'}
+                    isSignedIn={true}
+                />
             </Row>
         </FormContainer>
     )
