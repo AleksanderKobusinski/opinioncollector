@@ -15,6 +15,7 @@ function Header() {
   const navigate = useNavigate()
 
   const logoutHandler = () => {
+    localStorage.clear();
     dispatch(logout())
     navigate('/login')
   }

@@ -30,7 +30,7 @@ function RegisterScreen() {
     const clientId = "662396126009-bhsnhi6tonm1vrpspfj61259eifqokg5.apps.googleusercontent.com"
     const onSuccess = (res) => {
         setProfile(res.profileObj)
-        dispatch(register(profile.givenName, profile.email, profile.googleId))
+        dispatch(register(res.profileObj.givenName, res.profileObj.email, res.profileObj.googleId))
         setProfile(null);
     }
 
@@ -65,7 +65,7 @@ function RegisterScreen() {
         <FormContainer>
             <h1>Register</h1>
             {message && <Message variant='danger'>{message}</Message>}
-            {/* {error && <Message variant='danger'>{error}</Message>} */}
+            {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
 

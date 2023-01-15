@@ -28,11 +28,11 @@ function LoginScreen() {
 
     const onSuccess = (res) => {
         setProfile(res.profileObj)
-        dispatch(login(profile.email, profile.googleId))  
+        dispatch(login(res.profileObj.email, res.profileObj.googleId))
     }
 
     const onFailure = (err) => {
-        console.log('failed', err);
+        console.log('failed', err)
     }
 
     useEffect(() => {
@@ -54,8 +54,6 @@ function LoginScreen() {
         dispatch(login(email, password))
     }
 
-    console.log(profile)
-
     const responseGoogle = (response) => {
         console.log(response)
     }
@@ -63,7 +61,7 @@ function LoginScreen() {
     return (
         <FormContainer>
             <h1>Sign In</h1>
-            {/* {error && <Message variant='danger'>{error}</Message>} */}
+            {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
                 <Form.Group className="mb-3 rounded" controlId='email'>
