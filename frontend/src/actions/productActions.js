@@ -169,6 +169,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
             })
             .put(
                 `/api/products/update/${product._id}/`,
+                product
             )
 
         dispatch({

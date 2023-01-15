@@ -7,7 +7,6 @@ import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
 import { login, googleLogin } from '../actions/userActions'
 import { GoogleLogin } from 'react-google-login';
-import { gapi } from 'gapi-script';
 
 
 function LoginScreen() {

@@ -8,7 +8,6 @@ import FormContainer from '../components/FormContainer'
 import { register } from '../actions/userActions'
 import { googleLogin } from '../actions/userActions'
 import { GoogleLogin } from 'react-google-login';
-import { gapi } from 'gapi-script';
 
 function RegisterScreen() {
     const [name, setName] = useState('')

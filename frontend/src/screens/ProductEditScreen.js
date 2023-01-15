@@ -57,7 +57,6 @@ function ProductEditScreen() {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        console.log(category)
         dispatch(updateProduct({
             _id: productId.id,
             name,
@@ -125,25 +124,15 @@ function ProductEditScreen() {
 
                             <Form.Group className="mb-3 rounded" controlId='image'>
                                 <Form.Label>Image</Form.Label>
+
                                 <Form.Control
 
-                                    type='text'
+                                    type='name'
                                     placeholder='Enter image'
                                     value={image}
                                     onChange={(e) => setImage(e.target.value)}
                                 >
                                 </Form.Control>
-
-                                <Form.Control
-                                    id='image-file'
-                                    label='Choose File'
-                                    type='file'
-                                    custom
-                                    onChange={uploadFileHandler}
-                                >
-
-                                </Form.Control>
-                                {uploading && <Loader />}
 
                             </Form.Group>
 
