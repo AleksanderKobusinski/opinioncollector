@@ -88,7 +88,7 @@ export const categoryCreateReducer = (state = {}, action) => {
             return { loading: true }
 
         case CATEGORY_CREATE_SUCCESS:
-            return { loading: false, success: true, product: action.payload }
+            return { loading: false, success: true, category: action.payload }
 
         case CATEGORY_CREATE_FAIL:
             return { loading: false, error: action.payload }
