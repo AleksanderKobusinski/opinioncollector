@@ -7,7 +7,6 @@ import {
     MESSAGE_DETAILS_REQUEST,
     MESSAGE_DETAILS_SUCCESS,
     MESSAGE_DETAILS_FAIL,
-    MESSAGE_DETAILS_RESET,
 
     MESSAGE_DELETE_REQUEST,
     MESSAGE_DELETE_SUCCESS,
@@ -35,7 +34,7 @@ export const listMessages = () => async (dispatch, getState) => {
                 'Content-Type': 'application/json',
                 },
             })
-            .get(`/api/messages`)
+            .get(`http://madblack.pythonanywhere.com/api/messages`)
 
         dispatch({
             type: MESSAGE_LIST_SUCCESS,
@@ -69,7 +68,7 @@ export const getMessageDetails = (id) => async (dispatch, getState) => {
                     'Content-Type': 'application/json',
                 },
             })
-            .get(`/api/messages/${id}/`)
+            .get(`http://madblack.pythonanywhere.com/api/messages/${id}/`)
 
         dispatch({
             type: MESSAGE_DETAILS_SUCCESS,
@@ -103,7 +102,7 @@ export const deleteMessage = (id) => async (dispatch, getState) => {
                     'Content-Type': 'application/json',
                 },
             })
-            .delete(`/api/messages/delete/${id}`)
+            .delete(`http://madblack.pythonanywhere.com/api/messages/delete/${id}`)
 
         dispatch({
             type: MESSAGE_DELETE_SUCCESS,
@@ -127,7 +126,7 @@ export const createMessage = (message) => async (dispatch, getState) => {
 
         const { data } = await axios
             .post(
-                `/api/messages/create/`,
+                `http://madblack.pythonanywhere.com/api/messages/create/`,
                 message
             )
 

@@ -33,7 +33,7 @@ export const listProducts = (keyword = '', filter = '') => async (dispatch) => {
     try {
         dispatch({ type: PRODUCT_LIST_REQUEST })
 
-        const { data } = await axios.get(`/api/products?${keyword}${filter}`)
+        const { data } = await axios.get(`http://madblack.pythonanywhere.com/api/products?${keyword}${filter}`)
 
         dispatch({
             type: PRODUCT_LIST_SUCCESS,
@@ -54,7 +54,7 @@ export const listProductDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: PRODUCT_DETAILS_REQUEST })
 
-        const { data } = await axios.get(`/api/products/${id}`)
+        const { data } = await axios.get(`http://madblack.pythonanywhere.com/api/products/${id}`)
 
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
@@ -89,7 +89,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
                 }
             })
             .delete(
-                `/api/products/delete/${id}/`
+                `http://madblack.pythonanywhere.com/api/products/delete/${id}/`
             )
 
         dispatch({
@@ -128,7 +128,7 @@ export const createProduct = () => async (dispatch, getState) => {
                 }
             })
             .post(
-                `/api/products/create/`,
+                `http://madblack.pythonanywhere.com/api/products/create/`,
                 {}
             )
 
@@ -168,7 +168,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
                 }
             })
             .put(
-                `/api/products/update/${product._id}/`,
+                `http://madblack.pythonanywhere.com/api/products/update/${product._id}/`,
                 product
             )
 
@@ -212,7 +212,7 @@ export const updateVisibleProduct = (id) => async (dispatch, getState) => {
                 }
             })
             .put(
-                `/api/products/updateVisible/${id}/`
+                `http://madblack.pythonanywhere.com/api/products/updateVisible/${id}/`
             )
 
         dispatch({
@@ -247,7 +247,7 @@ export const createProductReview = (productId, review) => async (dispatch, getSt
                 }
             })
             .post(
-                `/api/products/${productId}/reviews/`,
+                `http://madblack.pythonanywhere.com/api/products/${productId}/reviews/`,
                 review
             )
 

@@ -7,7 +7,6 @@ import {
     CATEGORY_DETAILS_REQUEST,
     CATEGORY_DETAILS_SUCCESS,
     CATEGORY_DETAILS_FAIL,
-    CATEGORY_DETAILS_RESET,
 
     CATEGORY_DELETE_REQUEST,
     CATEGORY_DELETE_SUCCESS,
@@ -29,7 +28,7 @@ export const listCategories = () => async (dispatch, getState) => {
         })
 
         const { data } = await axios
-            .get(`/api/categories`)
+            .get(`http://madblack.pythonanywhere.com/api/categories`)
 
         dispatch({
             type: CATEGORY_LIST_SUCCESS,
@@ -63,7 +62,7 @@ export const getCategoryDetails = (id) => async (dispatch, getState) => {
                     'Content-Type': 'application/json',
                 },
             })
-            .get(`/api/categories/${id}/`)
+            .get(`http://madblack.pythonanywhere.com/api/categories/${id}/`)
 
         dispatch({
             type: CATEGORY_DETAILS_SUCCESS,
@@ -97,7 +96,7 @@ export const deleteCategory = (id) => async (dispatch, getState) => {
                     'Content-Type': 'application/json',
                 },
             })
-            .delete(`/api/categories/delete/${id}`)
+            .delete(`http://madblack.pythonanywhere.com/api/categories/delete/${id}`)
 
         dispatch({
             type: CATEGORY_DELETE_SUCCESS,
@@ -131,7 +130,7 @@ export const createCategory = () => async (dispatch, getState) => {
                 }
             })
             .post(
-                `/api/categories/create/`,
+                `http://madblack.pythonanywhere.com/api/categories/create/`,
                 {}
             )
 
@@ -169,7 +168,7 @@ export const updateCategory = (category) => async (dispatch, getState) => {
                 },
             })
             .put(
-                `/api/categories/update/${category._id}/`,
+                `http://madblack.pythonanywhere.com/api/categories/update/${category._id}/`,
                 category,
             )
 

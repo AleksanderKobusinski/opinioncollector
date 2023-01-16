@@ -1,6 +1,5 @@
 {
   "name": "frontend",
-  "proxy": "http://madblack.pythonanywhere.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
